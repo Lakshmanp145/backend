@@ -21,32 +21,7 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                
-                  sh 'echo "This id Test"'
-                
-            }
-        }
-        stage('Deploy') {
-            when{
-                expression { env.GIT_BRANCH == "origin/main"} 
-            }
-            steps {
-                
-                  sh 'echo "This is Deploy"'
-                  //error 'pipeline failed'
-            }
-        }
-        stage('Print params') {
-            steps{
-                echo "Hello ${params.PERSON}"
-                echo "Biography: ${params.BIOGRAPHY}"
-                echo "Toggle: ${params.TOGGLE}"
-                echo "Choice: ${params.CHOICE}"
-                echo "Password: ${params.PASSWORD}"
-            }
-        }
+
         stage('approval'){
             input {
                 message "Should we continue?"
