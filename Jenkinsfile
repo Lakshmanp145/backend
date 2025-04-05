@@ -28,6 +28,14 @@ pipeline {
 
              }
         }
+        stage('Docker build'){
+              steps {
+                  sh '''
+                  docker build -t lakshman143/backend:${appVersion}
+                  docker images
+                  '''
+              }
+        }
         stage('approval'){
             input {
                 message "Should we continue?"
