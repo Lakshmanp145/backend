@@ -22,7 +22,12 @@ pipeline {
                 }
             }
         }
+        stage('install dependendies'){
+             steps {
+                  sh 'npm install'
 
+             }
+        }
         stage('approval'){
             input {
                 message "Should we continue?"
