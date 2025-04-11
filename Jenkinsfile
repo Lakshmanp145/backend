@@ -14,7 +14,7 @@ pipeline {
         account_id = '503561459301'
         project = 'expense'
         environment = 'prod'
-        componant = 'backend'
+        component = 'backend'
     }
     
     stages {
@@ -38,11 +38,11 @@ pipeline {
                   sh """
                   aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
 
-                  docker build -t ${account_id}.dkr.ecr.${region}.amazonaws.com/${project}/${environment}/${componant}:${appVersion} .
+                  docker build -t ${account_id}.dkr.ecr.${region}.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
 
                   docker images
-                  
-                  docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${project}/${environment}/${componant}:${appVersion}
+
+                  docker push ${account_id}.dkr.ecr.${region}.amazonaws.com/${project}/${environment}/${component}:${appVersion}
 
                   """
               }
