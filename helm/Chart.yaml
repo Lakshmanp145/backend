@@ -1,0 +1,5 @@
+apiVersion: v2 
+name: backend
+description: "This is backend deployment"
+version: 1.0.0
+appVersion: 1.0.0  #not mandatory
