@@ -62,20 +62,20 @@ pipeline {
                 }
             }
         }
-        stage('approval'){
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
-            }
-            steps{
-                echo "Hello, ${PERSON}, nice to meet you. "
-            }
-        }
-    }
+    @REM     stage('approval'){
+    @REM         input {
+    @REM             message "Should we continue?"
+    @REM             ok "Yes, we should."
+    @REM             submitter "alice,bob"
+    @REM             parameters {
+    @REM                 string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+    @REM             }
+    @REM         }
+    @REM         steps{
+    @REM             echo "Hello, ${PERSON}, nice to meet you. "
+    @REM         }
+    @REM     }
+    @REM }
     post { 
         always { 
             echo 'This session runs always'
