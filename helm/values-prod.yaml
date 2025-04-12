@@ -1,7 +1,7 @@
 deployment:
   imageVersion: IMAGE_VERSION
   imageURL: 503561459301.dkr.ecr.us-east-1.amazonaws.com/expense/prod/backend
-ConfigMap:
+configMap:
   db_host: mysql-prod.lakshman.site
 hpa:
   cpuUtilization: 20
