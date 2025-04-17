@@ -41,6 +41,7 @@ pipeline {
                 // sonar server injection
                 withSonarQubeEnv('sonar-7.0') {
                     sh '${SCANNER_HOME}/bin/sonar-scanner'
+                    // we are using generic scanner it will automatically understand the language and provide the scan results
                 }                                 
             }
         }
