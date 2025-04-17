@@ -33,6 +33,17 @@ pipeline {
 
              }
         }
+        @REM stage('SonarQube analysis'){
+        @REM     environment {
+        @REM         SCANNER_HOME = tool 'sonar-7.0' //scanner configuration
+        @REM     }
+        @REM     steps { 
+        @REM         // sonar server injection
+        @REM         withSonarQubeEnv('sonar-7.0') {
+        @REM             sh '${SCANNER_HOME}/bin/sonar-scanner'
+        @REM         }                                 
+        @REM     }
+        @REM }
         stage('Docker build'){
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-creds') {
