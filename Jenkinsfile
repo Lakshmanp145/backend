@@ -33,17 +33,24 @@ pipeline {
 
              }
         }
-        @REM stage('SonarQube analysis'){
-        @REM     environment {
-        @REM         SCANNER_HOME = tool 'sonar-7.0' //scanner configuration
-        @REM     }
-        @REM     steps { 
-        @REM         // sonar server injection
-        @REM         withSonarQubeEnv('sonar-7.0') {
-        @REM             sh '${SCANNER_HOME}/bin/sonar-scanner'
-        @REM         }                                 
-        @REM     }
-        @REM }
+        stage('SonarQube analysis'){
+            environment {
+                SCANNER_HOME = tool 'sonar-7.0' //scanner configuration
+            }
+            steps { 
+                // sonar server injection
+                withSonarQubeEnv('sonar-7.0') {
+                    sh '${SCANNER_HOME}/bin/sonar-scanner'
+                }                                 
+            }
+        }
+        stage('SQuality Gate'){
+            steps{
+                timeout(time: 5, unit: 'Minutes') {
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
         stage('Docker build'){
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-creds') {
