@@ -36,25 +36,25 @@ pipeline {
 
              }
         }
-        @REM stage('SonarQube analysis'){
-        @REM     environment {
-        @REM         SCANNER_HOME = tool 'sonar-7.0' //scanner configuration
-        @REM     }
-        @REM     steps { 
-        @REM         // sonar server injection
-        @REM         withSonarQubeEnv('sonar-7.0') {
-        @REM             sh '${SCANNER_HOME}/bin/sonar-scanner'
-        @REM             // we are using generic scanner it will automatically understand the language and provide the scan results
-        @REM         }                                 
-        @REM     }
-        @REM }
-        @REM stage('SQuality Gate'){
-        @REM     steps{
-        @REM         timeout(time: 5, unit: 'Minutes') {
-        @REM             waitForQualityGate abortPipeline: true
-        @REM         }
-        @REM     }
-        @REM }
+//         @REM stage('SonarQube analysis'){
+//         @REM     environment {
+//         @REM         SCANNER_HOME = tool 'sonar-7.0' //scanner configuration
+//         @REM     }
+//         @REM     steps { 
+//         @REM         // sonar server injection
+//         @REM         withSonarQubeEnv('sonar-7.0') {
+//         @REM             sh '${SCANNER_HOME}/bin/sonar-scanner'
+//         @REM             // we are using generic scanner it will automatically understand the language and provide the scan results
+//         @REM         }                                 
+//         @REM     }
+//         @REM }
+//         @REM stage('SQuality Gate'){
+//         @REM     steps{
+//         @REM         timeout(time: 5, unit: 'Minutes') {
+//         @REM             waitForQualityGate abortPipeline: true
+//         @REM         }
+//         @REM     }
+//         @REM }
         stage('Docker build'){
             steps {
                 withAWS(region: 'us-east-1', credentials: 'aws-creds') {
@@ -75,29 +75,9 @@ pipeline {
             when {
                   expression { params.deploy }
             }      
-            steps {
-                withAWS(region: 'us-east-1', credentials: 'aws-creds') {
-                    sh """
-                        aws eks update-kubeconfig --region ${region} --name ${project}-${environment}
-                        cd helm
-                        sed -i 's/IMAGE_VERSION/${appVersion}/g' values-${environment}.yaml
-                        helm upgrade --install ${component} -n ${project} -f values-${environment}.yaml .
-                    """
-
-                }
-            }
-        }
-        stage('approval'){
-            input {
-                message "Should we continue?"
-                ok "Yes, we should."
-                submitter "alice,bob"
-                parameters {
-                    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-                }
-            }
             steps{
-                echo "Hello, ${PERSON}, nice to meet you. "
+                build job: 'backend-cd', parameters: 
+                [string(name: 'ACTION', value: "apply")], wait: false
             }
         }
     }
