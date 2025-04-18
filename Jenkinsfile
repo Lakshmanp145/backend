@@ -8,7 +8,7 @@ pipeline {
         //retry(1)
     }
     parameters{
-         booleanParam(name: 'Deploy', defaultValue: false, description: 'User can select deploy or not')
+         booleanParam(name: 'deploy', defaultValue: false, description: 'User can select deploy or not')
     }
     environment {
         DEBUG = 'true'
