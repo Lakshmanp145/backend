@@ -5,7 +5,7 @@ def configmap = [
     component: "backend"
 ]
 
-if(! env.BRANCH_NAME.equalsIgnoreCase('main')){  //true, if branch is future branch 
+if( ! env.BRANCH_NAME.equalsIgnoreCase('main')){  //true, if branch is future branch 
     nodeJSEKSpipeline(configmap)
 }
 else{
