@@ -78,7 +78,7 @@ pipeline {
             steps{
                 build job: 'backend-cd', parameters:[
                     string(name: 'version', value: "$appVersion"),
-                    string(name: 'ENVIRONMENT', value: "Dev"),
+                    string(name: 'ENVIRONMENT', value: 'Dev'),
                 ], wait: false
             }
         }
