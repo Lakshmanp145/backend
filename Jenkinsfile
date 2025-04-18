@@ -79,7 +79,7 @@ pipeline {
                 build job: 'backend-cd', parameters:[
                     string(name: 'version', value: "$appVesion"),
                     string(name: 'ENVIRONMENT', value: "dev"),
-                ], wait: false
+                ], wait: true
             }
         }
     }
